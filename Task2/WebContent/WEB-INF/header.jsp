@@ -1,17 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"
-    errorPage="/WEB-INF/error.jsp"%>
-<%@ include file="/taglib.jspf" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-</head>
-<body>
+<%@ include file="taglib.jspf" %>
+<fmt:setLocale value="${currentLocale}" />
+<fmt:setBundle basename="resources" />
 <c:if test="${not empty sessionScope.user }">
-	You are logged in as ${sessionScope.user.login} [${sessionScope.user.role}].<br/>
-	<a href="controller?command=logout">Log out</a>
+	<fmt:message key="message.header">
+		<fmt:message key="${sessionScope.user.role}" var="role" />
+		<fmt:param value="${sessionScope.user.login}" />
+		<fmt:param value="${role}" />
+	</fmt:message>
+	<br />
+	<a href="controller?command=logout"> <fmt:message
+			key="action.log_out" /></a>
 </c:if>
-<hr/>
-</body>
-</html>
+<br />
+<fmt:message key="label.current_locale">
+	<fmt:param value="${currentLocale}" />
+</fmt:message>
+<br />
+<fmt:message key="label.choose_locale" />
+<form action="locale" method="get">
+	<input onclick="submit()" type="radio" value="ru" name="newLocale"
+		<c:if test="${currentLocale == 'ru'}">CHECKED</c:if> /> RU <input
+		onclick="submit()" type="radio" value="en" name="newLocale"
+		<c:if test="${currentLocale == 'en'}">CHECKED</c:if> /> EN <br />
+	<!-- <input
+			type="submit" value="Submit" />-->
+</form>
+<hr />

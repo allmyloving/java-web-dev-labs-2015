@@ -13,7 +13,19 @@
 		<servlet-name>Controller</servlet-name>
 		<url-pattern>/controller</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet>
+		<servlet-name>LocaleServlet</servlet-name>
+		<servlet-class>ua.nure.serdiuk.Task2.web.LocaleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LocaleServlet</servlet-name>
+		<url-pattern>/locale</url-pattern>
+	</servlet-mapping>
+
+	<!-- <jsp-config> <jsp-property-group> <url-pattern>/*</url-pattern> <page-encoding>utf-8</page-encoding> 
+		</jsp-property-group> </jsp-config> -->
+
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/WEB-INF/error.jsp</location>
@@ -22,6 +34,27 @@
 		<error-code>404</error-code>
 		<location>/WEB-INF/error404.jsp</location>
 	</error-page>
+
+	<!-- Filters listeners -->
+
+	<filter>
+		<filter-name>LocaleFilter</filter-name>
+		<filter-class>ua.nure.serdiuk.Task2.web.filter.LocaleFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LocaleFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>ua.nure.serdiuk.Task2.web.filter.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<filter>
 		<filter-name>Access Filter</filter-name>
@@ -43,6 +76,12 @@
 		<filter-name>Access Filter</filter-name>
 		<servlet-name>Controller</servlet-name>
 	</filter-mapping>
+
+	<listener>
+		<listener-class>ua.nure.serdiuk.Task2.web.listener.ContextListener</listener-class>
+	</listener>
+
+	<!-- -->
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
