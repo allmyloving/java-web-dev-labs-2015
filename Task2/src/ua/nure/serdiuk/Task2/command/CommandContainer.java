@@ -13,6 +13,7 @@ public class CommandContainer {
 		commands.put("logout", new LogoutCommand());
 		
 		commands.put("editUser", new EditUserCommand());
+		commands.put("deleteUser", new DeleteUserCommand());
 		commands.put("adminView", new AdminViewCommand());
 		commands.put("editUserView", new EditUserViewCommand());
 		commands.put("addUserView", new AddUserViewCommand());

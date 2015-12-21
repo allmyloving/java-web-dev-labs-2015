@@ -12,7 +12,7 @@ public class AddUserViewCommand extends Command {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		req.getSession().setAttribute("currentUser", null);
+		req.setAttribute("currentUser", null);
 		return Path.VIEW_EDIT_USER;
 	}
 

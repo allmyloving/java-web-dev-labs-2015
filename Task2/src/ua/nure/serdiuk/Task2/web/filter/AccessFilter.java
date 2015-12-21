@@ -16,16 +16,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import ua.nure.serdiuk.Task2.db.entity.User;
 import ua.nure.serdiuk.Task2.util.Path;
 
 public class AccessFilter implements Filter {
 
+	private static final Logger LOG = Logger.getLogger(AccessFilter.class);
+
 	private Map<String, List<String>> access = new HashMap<>();
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		System.out.println("AccessFilter#init");
 		List<String> userAccess = Arrays.asList(filterConfig.getInitParameter("userAccess").split(" "));
 		List<String> adminAccess = new ArrayList<String>(
 				Arrays.asList(filterConfig.getInitParameter("adminAccess").split(" ")));
@@ -38,22 +41,22 @@ public class AccessFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("AccessFilter#doFilter");
 
 		String command = request.getParameter("command");
 		if (isAccessAllowed(request, command)) {
-			System.out.println(command + " access allowed");
+			LOG.info(command + " access allowed");
 			chain.doFilter(request, response);
 		} else {
-			System.out.println(command + " access denied");
-			((HttpServletRequest)request).getRequestDispatcher(Path.COMMAND_ACCESS_DENIED_VIEW).forward(request, response);
+			LOG.info(command + " access denied");
+			((HttpServletRequest) request).getRequestDispatcher(Path.COMMAND_ACCESS_DENIED_VIEW).forward(request,
+					response);
 		}
 
 	}
 
 	@Override
 	public void destroy() {
-		System.out.println("AccessFilter#destroy");
+		LOG.info("destroying");
 	}
 
 	private boolean isAccessAllowed(ServletRequest request, String command) {

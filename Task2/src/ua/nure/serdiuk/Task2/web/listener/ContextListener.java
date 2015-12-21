@@ -1,29 +1,37 @@
 package ua.nure.serdiuk.Task2.web.listener;
 
+import java.util.Arrays;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.omg.CORBA.ContextList;
 
 public class ContextListener implements ServletContextListener {
-	
+
 	private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		// load log4j
-		PropertyConfigurator.configure(sce.getServletContext().getRealPath("WEB-INF/log4j.properties"));
+		ServletContext context = sce.getServletContext();
+
+		PropertyConfigurator.configure(context.getRealPath("WEB-INF/log4j.properties"));
 		LOG.info("log4j configured.");
 
+		String[] locales = context.getInitParameter("localeList").split("\\s+");
+		context.setAttribute("localeList", Arrays.asList(locales));
+		LOG.info("locales found ==> " + Arrays.asList(locales));
+
+		String bundleBasename = context.getInitParameter("bundleBasename");
+		context.setAttribute("bundleBasename", bundleBasename);
+		LOG.info("bundleBasename set to ==> " + bundleBasename);
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

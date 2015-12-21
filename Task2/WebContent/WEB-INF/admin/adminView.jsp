@@ -11,10 +11,16 @@
 		<fmt:message key="action.confirm_delete">
 			<fmt:param value="${userLogin}"></fmt:param>
 		</fmt:message>
-		<a
+		<form name="deleteUser"
+			action="controller?command=deleteUser&userLogin=${userLogin}"
+			method="post">
+			<a href="#" onclick="document.forms['deleteUser'].submit()"><fmt:message
+					key="action.confirm" /></a>
+		</form>
+		<!-- <a
 			href="controller?command=adminView&delete=true&userLogin=${userLogin}">
 			<fmt:message key="action.confirm" />
-		</a>
+		</a> -->
 	</c:if>
 
 	<c:if test="${fn:length(users) !=0 }">

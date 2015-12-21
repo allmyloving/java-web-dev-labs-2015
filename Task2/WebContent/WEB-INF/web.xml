@@ -5,6 +5,16 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>Task2</display-name>
 
+	<context-param>
+		<param-name>localeList</param-name>
+		<param-value>en ru</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>bundleBasename</param-name>
+		<param-value>ua.nure.serdiuk.Task2.resources.resources</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>Controller</servlet-name>
 		<servlet-class>ua.nure.serdiuk.Task2.web.Controller</servlet-class>
@@ -23,9 +33,6 @@
 		<url-pattern>/locale</url-pattern>
 	</servlet-mapping>
 
-	<!-- <jsp-config> <jsp-property-group> <url-pattern>/*</url-pattern> <page-encoding>utf-8</page-encoding> 
-		</jsp-property-group> </jsp-config> -->
-
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/WEB-INF/error.jsp</location>
@@ -40,6 +47,10 @@
 	<filter>
 		<filter-name>LocaleFilter</filter-name>
 		<filter-class>ua.nure.serdiuk.Task2.web.filter.LocaleFilter</filter-class>
+		<init-param>
+			<param-name>defaultLocale</param-name>
+			<param-value>en</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>LocaleFilter</filter-name>
@@ -61,7 +72,7 @@
 		<filter-class>ua.nure.serdiuk.Task2.web.filter.AccessFilter</filter-class>
 		<init-param>
 			<param-name>adminAccess</param-name>
-			<param-value>addUser addUserView</param-value>
+			<param-value>addUser addUserView deleteUser</param-value>
 		</init-param>
 		<init-param>
 			<param-name>userAccess</param-name>
@@ -69,7 +80,7 @@
 		</init-param>
 		<init-param>
 			<param-name>commonAccess</param-name>
-			<param-value>login logout loginView accessDeniedView errorView noCommand</param-value>
+			<param-value>login logout loginView accessDeniedView errorView sessionInvalidate noCommand</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
